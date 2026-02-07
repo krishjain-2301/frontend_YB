@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Moodify</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: url('bg.png') center / cover no-repeat black;
+        }
+
+        .heading-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .fade-in {
+            animation: fadeIn 1.2s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+
+        .section-visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen text-white">
+
+    <div class="fixed inset-0 bg-black/60 fade-in overflow-hidden">
+
+        <!-- LANDING -->
+        <section id="landing"
+            class="absolute inset-0 flex flex-col items-center justify-center text-center section-visible">
+
+            <h1 class="heading-font text-5xl tracking-widest font-normal">
+                WELCOME
+            </h1>
+
+            <p class="mt-6 text-zinc-300 text-lg tracking-wide max-w-xl">
+                Discover the perfect movie or song.
+            </p>
+
+            <button id="startBtn"
+                class="mt-12 px-12 py-3 border border-white/70 tracking-[0.25em] text-sm hover:bg-white hover:text-black transition">
+                START
+            </button>
+
+        </section>
+
+        <!-- CHOICE SCREEN -->
+        <section id="choiceScreen"
+            class="hidden absolute inset-0 flex flex-col items-center justify-center text-center space-y-8">
+
+            <h2 class="heading-font text-3xl">
+                What are you in the mood for?
+            </h2>
+
+            <div class="flex gap-6">
+                <button id="songChoice"
+                    class="px-10 py-4 bg-white/10 border border-white/20 rounded-xl hover:bg-white/20 transition">
+                    🎵 Songs
+                </button>
+
+                <button id="movieChoice"
+                    class="px-10 py-4 bg-white/10 border border-white/20 rounded-xl hover:bg-white/20 transition">
+                    🎬 Movies
+                </button>
+            </div>
+
+        </section>
+
+        <!-- SONG SECTION -->
+        <section id="songSection"
+            class="hidden absolute inset-0 overflow-y-auto px-10 py-16 space-y-10">
+
+            <button id="songBackBtn"
+                class="absolute top-6 left-6 text-sm tracking-wide border border-white/30 px-4 py-2 rounded-lg hover:bg-white hover:text-black transition">
+                ← Back
+            </button>
+
+            <h2 class="heading-font text-4xl text-center">
+                Browse by Mood
+            </h2>
+
+            <div id="emotionGrid"
+                class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            </div>
+
+            <div id="songGrid"
+                class="grid grid-cols-2 md:grid-cols-3 gap-8">
+            </div>
+
+            <div class="text-center">
+                <button id="songLoadMoreBtn"
+                    class="hidden mt-6 px-8 py-3 border border-white/30 rounded-lg hover:bg-white hover:text-black transition">
+                    Load More
+                </button>
+            </div>
+
+        </section>
+
+        <!-- MOVIE SECTION -->
+        <section id="movieSection"
+            class="hidden absolute inset-0 overflow-y-auto px-10 py-16 space-y-10">
+
+            <button id="movieBackBtn"
+                class="absolute top-6 left-6 text-sm tracking-wide border border-white/30 px-4 py-2 rounded-lg hover:bg-white hover:text-black transition">
+                ← Back
+            </button>
+
+            <h2 class="heading-font text-4xl text-center">
+                Browse by Genre
+            </h2>
+
+            <div id="genreGrid"
+                class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            </div>
+
+            <div id="movieGrid"
+                class="grid grid-cols-2 md:grid-cols-3 gap-8">
+            </div>
+
+            <div class="text-center">
+                <button id="loadMoreBtn"
+                    class="hidden mt-6 px-8 py-3 border border-white/30 rounded-lg hover:bg-white hover:text-black transition">
+                    Load More
+                </button>
+            </div>
+
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
