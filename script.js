@@ -96,7 +96,7 @@ async function fetchSongs() {
 
   isLoadingSongs = true;
 
-  let url = `http://127.0.0.1:5000/songs?emotion=${currentEmotion}`;
+  let url = `https://backend-o5xo.onrender.com/songs?emotion=${currentEmotion}`;
 
   if (songNextPageToken) {
     url += `&pageToken=${songNextPageToken}`;
@@ -140,7 +140,7 @@ function extractVideoId(url) {
 
 /* ---------- MOVIE MODE ---------- */
 async function fetchGenres() {
-  const res = await fetch("http://127.0.0.1:5000/genres");
+  const res = await fetch("https://backend-o5xo.onrender.com/genres");
   const genres = await res.json();
 
   genreGrid.innerHTML = "";
@@ -169,7 +169,7 @@ async function fetchMovies() {
   isLoadingMovies = true;
 
   const res = await fetch(
-    `http://127.0.0.1:5000/movies?genre_id=${currentGenre}&page=${moviePage}`
+    `https://backend-o5xo.onrender.com/movies?genre_id=${currentGenre}&page=${moviePage}`
   );
 
   const movies = await res.json();
@@ -216,3 +216,4 @@ songSection.addEventListener("scroll", () => {
     fetchSongs();
   }
 });
+
