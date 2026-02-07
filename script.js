@@ -181,9 +181,19 @@ async function fetchMovies() {
 
     card.innerHTML = `
       ${movie.poster ? `<img src="${movie.poster}" class="w-full h-64 object-cover">` : ""}
-      <div class="p-4 space-y-2">
+      <div class="p-4 space-y-3">
         <h3 class="text-lg font-medium">${movie.title}</h3>
         <p class="text-xs text-zinc-400 line-clamp-3">${movie.overview}</p>
+
+        ${
+          movie.trailer
+            ? `<a href="${movie.trailer}"
+                 target="_blank"
+                 class="inline-block mt-2 text-sm underline">
+                 ▶ Show Trailer
+               </a>`
+            : ""
+        }
       </div>
     `;
 
@@ -193,6 +203,7 @@ async function fetchMovies() {
   moviePage++;
   isLoadingMovies = false;
 }
+
 
 movieSection.addEventListener("scroll", () => {
   const scrollTop = movieSection.scrollTop;
@@ -216,4 +227,5 @@ songSection.addEventListener("scroll", () => {
     fetchSongs();
   }
 });
+
 
