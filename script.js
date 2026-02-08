@@ -22,10 +22,34 @@ const songLoadMoreBtn = document.getElementById("songLoadMoreBtn");
 const genreGrid = document.getElementById("genreGrid");
 const movieGrid = document.getElementById("movieGrid");
 
+/* 🔥 NEW ADDITION */
+const countrySelect = document.getElementById("countrySelect");
+/* ---------------- */
+
 let currentEmotion = null;
 let currentGenre = null;
 let moviePage = 1;
 let isLoadingMovies = false;
+
+/* -------------------- NEW FEATURE -------------------- */
+/* Default country for streaming availability */
+let currentCountry = "IN";
+/* ----------------------------------------------------- */
+
+/* 🔥 NEW ADDITION */
+if (countrySelect) {
+  countrySelect.addEventListener("change", () => {
+    currentCountry = countrySelect.value;
+
+    if (currentGenre) {
+      movieGrid.innerHTML = "";
+      moviePage = 1;
+      fetchMovies();
+    }
+  });
+}
+/* ---------------- */
+
 
 /* ---------- START ---------- */
 startBtn.onclick = () => {
@@ -37,7 +61,6 @@ songBackBtn.onclick = () => {
   songSection.classList.add("hidden");
   choiceScreen.classList.remove("hidden");
 
-  // reset song state
   songGrid.innerHTML = "";
   songNextPageToken = null;
   currentEmotion = null;
@@ -47,11 +70,11 @@ movieBackBtn.onclick = () => {
   movieSection.classList.add("hidden");
   choiceScreen.classList.remove("hidden");
 
-  // reset movie state
   movieGrid.innerHTML = "";
   currentGenre = null;
   moviePage = 1;
 };
+
 
 /* ---------- CHOICE ---------- */
 songChoice.onclick = () => {
@@ -65,6 +88,7 @@ movieChoice.onclick = () => {
   movieSection.classList.remove("hidden");
   fetchGenres();
 };
+
 
 /* ---------- SONG MODE ---------- */
 const emotions = ["sadness","joy","anger","fear","surprise","neutral"];
@@ -132,11 +156,11 @@ async function fetchSongs() {
   isLoadingSongs = false;
 }
 
-
 function extractVideoId(url) {
   const match = url.match(/v=([^&]+)/);
   return match ? match[1] : "";
 }
+
 
 /* ---------- MOVIE MODE ---------- */
 async function fetchGenres() {
@@ -169,7 +193,7 @@ async function fetchMovies() {
   isLoadingMovies = true;
 
   const res = await fetch(
-    `https://backend-o5xo.onrender.com/movies?genre_id=${currentGenre}&page=${moviePage}`
+    `https://backend-o5xo.onrender.com/movies?genre_id=${currentGenre}&page=${moviePage}&country=${currentCountry}`
   );
 
   const movies = await res.json();
@@ -184,6 +208,16 @@ async function fetchMovies() {
       <div class="p-4 space-y-3">
         <h3 class="text-lg font-medium">${movie.title}</h3>
         <p class="text-xs text-zinc-400 line-clamp-3">${movie.overview}</p>
+
+        ${
+          movie.providers && movie.providers.length > 0
+            ? `<p class="text-xs text-green-400">
+                 Available on: ${movie.providers.join(", ")}
+               </p>`
+            : `<p class="text-xs text-red-400">
+                 Not available in your region
+               </p>`
+        }
 
         ${
           movie.trailer
@@ -227,5 +261,3 @@ songSection.addEventListener("scroll", () => {
     fetchSongs();
   }
 });
-
-
